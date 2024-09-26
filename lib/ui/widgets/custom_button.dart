@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
-class Button extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final String text;
-  final VoidCallback? callback;
+  final VoidCallback? onTap;
   final Widget? icon;
 
-  const Button({required this.text, this.callback, this.icon, super.key});
+  const CustomButton({required this.text, this.onTap, this.icon, super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (callback != null) {
-          callback!();
+        if (onTap != null) {
+          onTap!();
         } else {
           print('callback null');
         }

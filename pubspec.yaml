@@ -26,3 +26,8 @@ flutter:
     - assets/img/google.svg
     - assets/img/apple_dark.svg
     - assets/img/apple.svg
+    - assets/img/covers/deadpool3.jpg
+    - assets/img/covers/harryPotter.jpg
+    - assets/img/covers/nacidosBruma.jpg
+    - assets/img/covers/titanic.jpg
+    - assets/img/covers/theConjuring.png
