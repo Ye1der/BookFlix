@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../colors/global_colors.dart';
 import './covers.dart';
 import './sentence.dart';
 import './buttons.dart';
-import 'package:flutter/services.dart';
+import 'package:book_flix/utils/colors/global_colors.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});
@@ -14,6 +13,7 @@ class Welcome extends StatelessWidget {
         backgroundColor: const Color(0xFFF9F9F9),
         appBar: AppBar(
             toolbarHeight: 50.0,
+            automaticallyImplyLeading: false,
             title: const Text('BookFlix',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,

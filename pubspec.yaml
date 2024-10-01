@@ -1,4 +1,4 @@
-name: first_app
+name: book_flix
 description: "A new Flutter project."
 publish_to: "none"
 
@@ -14,6 +14,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   lucide_icons: ^0.257.0
   flutter_svg: ^2.0.10+1
+  go_router: ^14.2.8
 
 dev_dependencies:
   flutter_test:

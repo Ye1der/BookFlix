@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../colors/global_colors.dart';
+import 'package:book_flix/utils/colors/global_colors.dart';
 
 class Sentence extends StatelessWidget {
   const Sentence({super.key});
