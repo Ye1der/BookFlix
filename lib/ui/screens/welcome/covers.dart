@@ -8,6 +8,7 @@ class Covers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
+      clipBehavior: Clip.none,
       children: [
         const SizedBox(
           width: double.infinity,
@@ -20,7 +21,7 @@ class Covers extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   color: Color(0xBBFF6A6A),
-                  spreadRadius: 0,
+                  spreadRadius: 10,
                   blurRadius: 500,
                 )
               ]

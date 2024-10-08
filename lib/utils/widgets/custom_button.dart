@@ -42,23 +42,25 @@ class _CustomButton extends State<CustomButton> {
         child: AnimatedScale(
           duration: const Duration(milliseconds: 100),
           scale: _scale,
-          child: Container(
-            height: 55.0,
-            decoration: BoxDecoration(
-                color: Colors.black, borderRadius: BorderRadius.circular(15.0)),
-            padding: const EdgeInsets.all(13.0),
-            child: Row(children: [
-              Text(widget.text,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold)),
-              widget.icon != null
-                  ? const SizedBox(width: 10.0)
-                  : const SizedBox.shrink(),
-              widget.icon != null ? widget.icon! : const SizedBox.shrink()
-            ]),
-          ),
+          child: IntrinsicWidth(
+            child: Container(
+              height: 55.0,
+              decoration: BoxDecoration(
+                  color: Colors.black, borderRadius: BorderRadius.circular(15.0)),
+              padding: const EdgeInsets.all(13.0),
+              child: Row(children: [
+                Text(widget.text,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold)),
+                widget.icon != null
+                    ? const SizedBox(width: 10.0)
+                    : const SizedBox.shrink(),
+                widget.icon != null ? widget.icon! : const SizedBox.shrink()
+              ]),
+            )
+          )
         ));
   }
 }

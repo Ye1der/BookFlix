@@ -10,8 +10,9 @@ class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xFFF9F9F9),
+        backgroundColor: CustomColors.background,
         appBar: AppBar(
+            backgroundColor: CustomColors.background,
             toolbarHeight: 50.0,
             automaticallyImplyLeading: false,
             title: const Text('BookFlix',

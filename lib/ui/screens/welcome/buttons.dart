@@ -7,6 +7,7 @@ import '../register/register_screen.dart';
 import 'package:book_flix/utils/cutom_navigate.dart';
 import './welcome_screen.dart';
 import 'package:book_flix/main.dart';
+import 'package:go_router/go_router.dart';
 
 class Buttons extends StatelessWidget {
   const Buttons({super.key});
@@ -18,9 +19,7 @@ class Buttons extends StatelessWidget {
           text: 'Get started',
           icon: const Icon(LucideIcons.arrowUpRight, color: Colors.white),
           onTap: () {
-            final rootState = context.findAncestorStateOfType<RootState>();
-            print('state --> ${rootState?.delegate}');
-            rootState?.delegate.setNewRoutePath(Uri.parse('/register'));
+            GoRouter.of(context).push('/registerrr');
           }),
       const SizedBox(width: 15.0),
       CustomIconButton(
