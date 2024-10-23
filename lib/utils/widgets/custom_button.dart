@@ -4,8 +4,9 @@ class CustomButton extends StatefulWidget {
   final String text;
   final VoidCallback? onTap;
   final Widget? icon;
+  final bool fullWith;
 
-  const CustomButton({required this.text, this.onTap, this.icon, super.key});
+  const CustomButton({required this.text, this.onTap, this.icon, this.fullWith = false, super.key});
 
   @override
   _CustomButton createState() => _CustomButton();
@@ -40,16 +41,22 @@ class _CustomButton extends State<CustomButton> {
         onTapUp: _onTapUp,
         onTapCancel: _onTapCancel,
         child: AnimatedScale(
-          duration: const Duration(milliseconds: 100),
-          scale: _scale,
-          child: IntrinsicWidth(
-            child: Container(
+            duration: const Duration(milliseconds: 100),
+            scale: _scale,
+            child: IntrinsicWidth(
+                child: Container(
+                  alignment: Alignment.center,
+                  width: widget.fullWith ? MediaQuery.of(context).size.width : null,
               height: 55.0,
               decoration: BoxDecoration(
-                  color: Colors.black, borderRadius: BorderRadius.circular(15.0)),
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(15.0)),
               padding: const EdgeInsets.all(13.0),
-              child: Row(children: [
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                 Text(widget.text,
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20.0,
@@ -59,8 +66,6 @@ class _CustomButton extends State<CustomButton> {
                     : const SizedBox.shrink(),
                 widget.icon != null ? widget.icon! : const SizedBox.shrink()
               ]),
-            )
-          )
-        ));
+            ))));
   }
 }

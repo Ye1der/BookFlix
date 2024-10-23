@@ -10,36 +10,46 @@ class NotFound extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-          Container(
-              decoration: const BoxDecoration(boxShadow: [
-                BoxShadow(
-                  color: CustomColors.red,
-                  spreadRadius: 0,
-                  blurRadius: 100,
-                )
-              ]),
-              child: const Text('404',
-                  style: TextStyle(
-                      fontSize: 60.0,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Opacity(
+                  opacity: 0.2,
+                  child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(500),
+                        boxShadow: const [
+                        BoxShadow(
+                          color: CustomColors.red,
+                          spreadRadius: 100,
+                          blurRadius: 100,
+                        )
+                      ]),
+                      child: const Text('404',
+                          style: TextStyle(
+                              fontSize: 100.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white54))
+                  ),
+                ),
+                const Text('Page not found',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30.0,
                       fontWeight: FontWeight.bold,
-                      color: CustomColors.red))),
-          const Text('Page not found',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-              )),
-          CustomButton(
-            text: 'Go Home',
-            icon: const Icon(LucideIcons.arrowUpRight, color: Colors.white),
-            onTap: () {
+                    )),
+                Transform.translate(
+                  offset: const Offset(0, 80),
+                  child: CustomButton(
+                    text: 'Go Home',
+                    icon: const Icon(LucideIcons.arrowUpRight, color: Colors.white),
+                    onTap: () {
 
-            }
-          )
-        ])));
+                    }
+                  )
+                )
+              ]
+            )
+        ));
   }
 }

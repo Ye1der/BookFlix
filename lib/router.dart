@@ -1,3 +1,4 @@
+import 'package:book_flix/ui/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import './main.dart';
 import 'package:go_router/go_router.dart';
@@ -17,7 +18,8 @@ mixin RouterMixin on State<Root> {
             final params = state.pathParameters;
             print(params); // Parametros de la url
             return Register();
-          })
+          }),
+      GoRoute(path: '/login', builder:(_, __) => const Login())
   ]);
 
   GoRouter get router => _router;
