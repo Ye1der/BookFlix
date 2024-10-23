@@ -39,6 +39,7 @@ class Register extends StatelessWidget {
             padding: const EdgeInsets.all(30.0),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,10 +78,13 @@ class Register extends StatelessWidget {
                                   color: CustomColors.red)))
                     ]),
                     const SizedBox(height: 10.0),
-                    const CustomButton(
-                        text: 'Register',
-                        fullWith: true,
-                        icon: Icon(LucideIcons.user, color: Colors.white))
+                    CustomButton(
+                      onTap: () {
+                        GoRouter.of(context).push("/cards");
+                      },
+                      text: 'Register',
+                      fullWith: true,
+                    )
                   ])
                 ])));
   }

@@ -3,14 +3,14 @@ import 'package:book_flix/utils/widgets/custom_input.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-class MyForm extends StatefulWidget {
-  MyForm({super.key});
+class LoginForm extends StatefulWidget {
+  LoginForm({super.key});
 
   @override
   _Form createState() => _Form();
 }
 
-class _Form extends State<MyForm> {
+class _Form extends State<LoginForm> {
   final TextEditingController _user = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
@@ -69,8 +69,6 @@ class _Form extends State<MyForm> {
               )
             ]))
       ]),
-      const SizedBox(height: 15.0),
-      CustomInput(controller: _confirmPassword, placeholder: 'Confirm your password')
     ]);
   }
 }
