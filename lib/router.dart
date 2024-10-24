@@ -1,4 +1,5 @@
-import 'package:book_flix/ui/screens/cards/cards_screen.dart';
+import 'package:book_flix/ui/screens/favorites/favorites_screen.dart';
+import 'package:book_flix/ui/screens/home/home_screen.dart';
 import 'package:book_flix/ui/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -34,9 +35,16 @@ mixin RouterMixin on State<Root> {
         ),
       ),
       GoRoute(
-        path: '/cards',
+        path: '/home',
         pageBuilder: (context, state) => _buildTransitionPage(
-          child: Cards(),
+          child: Home(),
+          state: state,
+        ),
+      ),
+      GoRoute(
+        path: '/favorites',
+        pageBuilder: (context, state) => _buildTransitionPage(
+          child: FavoritesScreen(),
           state: state,
         ),
       ),

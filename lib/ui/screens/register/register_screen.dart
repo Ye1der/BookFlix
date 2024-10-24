@@ -80,7 +80,7 @@ class Register extends StatelessWidget {
                     const SizedBox(height: 10.0),
                     CustomButton(
                       onTap: () {
-                        GoRouter.of(context).push("/cards");
+                        GoRouter.of(context).push("/home");
                       },
                       text: 'Register',
                       fullWith: true,
