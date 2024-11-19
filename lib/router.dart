@@ -1,7 +1,9 @@
+import 'package:book_flix/ui/screens/details_movie/details_movie_screen.dart';
 import 'package:book_flix/ui/screens/favorites/favorites_screen.dart';
 import 'package:book_flix/ui/screens/home/home_screen.dart';
 import 'package:book_flix/ui/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import './ui/screens/welcome/welcome_screen.dart';
 import './ui/screens/register/register_screen.dart';
@@ -48,6 +50,28 @@ mixin RouterMixin on State<Root> {
           state: state,
         ),
       ),
+      GoRoute(
+        path: '/movie_details/:imgUrl',
+        pageBuilder: (context, state) {
+          final imgUrl = state.pathParameters['imgUrl'] ?? '';
+          // return _buildTransitionPage(
+          //   child: MovieDetails(imgUrl: imgUrl),
+          //   state: state
+          // );
+          return CustomTransitionPage(
+            transitionDuration: const Duration(milliseconds: 450),
+            reverseTransitionDuration: const Duration(milliseconds: 450),
+            key: state.pageKey,
+            child: MovieDetails(imgUrl: imgUrl),
+            transitionsBuilder: (context, animation, _, child) {
+              return SlideTransition(
+                  position: Tween(begin: const Offset(0, 1), end: Offset.zero)
+                      .animate(animation),
+                  child: child);
+            },
+          );
+        },
+      )
     ],
   );
 
@@ -60,13 +84,16 @@ mixin RouterMixin on State<Root> {
     return CustomTransitionPage(
       key: state.pageKey,
       child: child,
+      transitionDuration: const Duration(milliseconds: 450),
+      reverseTransitionDuration: const Duration(milliseconds: 450),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         // Definimos una animación personalizada (Slide hacia la derecha)
         const begin = Offset(1.0, 0.0); // Desde la derecha
         const end = Offset.zero; // Hacia el centro
         const curve = Curves.easeInOut;
 
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
         var offsetAnimation = animation.drive(tween);
 
         return SlideTransition(

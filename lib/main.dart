@@ -1,8 +1,7 @@
+import 'package:book_flix/Context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
-import './ui/screens/welcome/welcome_screen.dart';
-import './ui/screens/register/register_screen.dart';
+import 'package:provider/provider.dart';
 import './router.dart';
 import 'package:book_flix/utils/colors/global_colors.dart';
 
@@ -14,7 +13,10 @@ void main() {
   ));
 
   // Punto de entrada de la app
-  runApp(const Root());
+  runApp(ChangeNotifierProvider(
+    create: (_) => Context(),
+    child: const Root()
+  ));
 }
 
 class Root extends StatefulWidget {

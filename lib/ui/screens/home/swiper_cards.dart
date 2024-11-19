@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:appinio_swiper/appinio_swiper.dart';
-import 'package:book_flix/utils/widgets/custom_button.dart';
+import 'package:book_flix/classes/movie.dart';
+import 'package:book_flix/ui/screens/home/buttons.dart';
+import 'package:book_flix/ui/skeletons/movie_card_skeleton.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:heroicons/heroicons.dart';
+import './movie_card.dart';
 
 class Swiper extends StatefulWidget {
   Swiper({super.key});
@@ -12,10 +16,16 @@ class Swiper extends StatefulWidget {
   _Swiper createState() => _Swiper();
 }
 
-class _Swiper extends State<Swiper> {
+class _Swiper extends State<Swiper> with SingleTickerProviderStateMixin {
   final AppinioSwiperController swiperController = AppinioSwiperController();
   List<dynamic> _movies = [];
 
+  double _sizeLike = 0.0;
+  double _sizeUnLike = 0.0;
+
+  int indexFirst = 0; // Señala el index de la tarjeta que esta visible
+
+  // Peticion de peliculas
   Future<dynamic> _fetchMovies() async {
     final dio = Dio();
     dio.options.headers['Authorization'] =
@@ -34,121 +44,93 @@ class _Swiper extends State<Swiper> {
 
   @override
   void initState() {
+    // Inicia el estado del widget y hace la peiticion de peliculas
     super.initState();
     _fetchMovies();
   }
 
-  void _handleSwipe(int _, int __, SwiperActivity swiperActivity) {
+  // Callback que se llama cuando se termina un swipe
+  void _handleSwipeEnd(int _, int __, SwiperActivity swiperActivity) {
+    setState(() {
+      _sizeLike = 0;
+      _sizeUnLike = 0;
+    });
+
+    if (swiperActivity.end?.dx == 0.0)
+      return; // si no se completa el swipe no se termina de ejecutar la función
+
     if (swiperActivity.direction.name == 'right') {
-      print('se movio a la derecha');
+      print('derecha');
     }
+
+    setState(() {
+      indexFirst++;
+    });
+  }
+
+  // Toma las coordenadas en x de la tarjeta cuando se desliza y las pone en una variable
+  void _swiperPosition(SwiperPosition position) {
+    if (position.offset.dx >= 0) {
+      _sizeLike = position.offset.dx;
+    } else {
+      _sizeUnLike = position.offset.dx * -1;
+    }
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      if (_movies.isNotEmpty)
-        Container(
-            height: 700,
-            width: 350,
-            child: AppinioSwiper(
-                controller: swiperController,
-                backgroundCardOffset: Offset.zero,
-                backgroundCardScale: 0.8,
-                swipeOptions: const SwipeOptions.only(left: true, right: true),
-                onSwipeEnd: _handleSwipe,
-                cardCount: _movies.length - 1,
-                cardBuilder: (BuildContext context, int index) {
-                  final movie = _movies[index];
+      SizedBox(
+          height: 650,
+          width: 380,
+          child: Stack(children: [
+            if (_movies.isNotEmpty)
+              AppinioSwiper(
+                  controller: swiperController,
+                  backgroundCardOffset: Offset.zero,
+                  backgroundCardScale: 0.8,
+                  swipeOptions:
+                      const SwipeOptions.only(left: true, right: true),
+                  invertAngleOnBottomDrag: false,
+                  onSwipeEnd: _handleSwipeEnd,
+                  onCardPositionChanged: _swiperPosition,
+                  cardCount: _movies.length - 1,
+                  cardBuilder: (BuildContext context, int index) {
+                    final movie = _movies[index];
 
-                  return Card(
-                      calification: movie['vote_average'],
-                      title: movie['title'],
-                      overview: movie['overview'],
-                      img: movie['poster_path']);
-                }))
+                    return MovieCard(
+                      movie: Movie(
+                        calification: movie['vote_average'],
+                        title: movie['title'],
+                        overview: movie['overview'],
+                        img: movie['poster_path'],
+                      ),
+                      firstCard: indexFirst == index,
+                      sizeLike: _sizeLike,
+                      sizeUnLike: _sizeUnLike,
+                    );
+                  }),
+            if (_movies.isEmpty) MovieCardSkeleton()
+          ])),
+      const SizedBox(height: 20.0),
+      Buttons(
+          onTapLike: () {
+            _sizeLike = 200;
+            setState(() {});
+            swiperController.swipeRight();
+          },
+          onTapUnLike: () {
+            _sizeUnLike = 200;
+            setState(() {});
+            swiperController.swipeLeft();
+          },
+          onTapBack: () {
+            swiperController.unswipe();
+            if (indexFirst > 0) indexFirst--;
+          },
+          scaleLike: _sizeLike,
+          scaleUnLike: _sizeUnLike)
     ]);
-  }
-}
-
-class Card extends StatelessWidget {
-  final String title;
-  final String overview;
-  final String img;
-  final double calification;
-
-  const Card(
-      {required this.img,
-      required this.overview,
-      required this.calification,
-      required this.title,
-      super.key});
-
-  String _recortarTexto(String texto, int maxCaracteres) {
-    if (texto.length <= maxCaracteres) {
-      return texto;
-    }
-    return '${texto.substring(0, maxCaracteres)}...';
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 15.0
-          )
-        ]
-      ),
-      child: Column(children: [
-        Container(
-          height: 550,
-          width: 350,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage('https://image.tmdb.org/t/p/w500/$img'),
-                  fit: BoxFit.cover),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0),
-              )),
-        ),
-        Container(
-            alignment: Alignment.topLeft,
-            height: 150,
-            width: 350,
-            padding: const EdgeInsets.all(10.0),
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20.0),
-                    bottomRight: Radius.circular(20.0))),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(title,
-                      style: const TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 5.0),
-                  Text(_recortarTexto(overview, 100),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.black54)),
-                  const SizedBox(height: 5.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(calification.toString(), style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0
-                      )),
-                      Icon(Icons.star, color: Colors.yellow)
-                    ]
-                  )
-                ]))
-      ])
-    );
   }
 }
