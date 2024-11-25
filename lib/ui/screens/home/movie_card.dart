@@ -1,15 +1,9 @@
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:book_flix/Context.dart';
 import 'package:book_flix/classes/movie.dart';
 import 'package:book_flix/ui/screens/details_movie/details_movie_screen.dart';
 import 'package:book_flix/utils/colors/global_colors.dart';
-import 'package:book_flix/utils/widgets/FadeInText.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 class MovieCard extends StatelessWidget {
@@ -34,155 +28,126 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: [
-          Stack(
-            clipBehavior: Clip.hardEdge,
-            alignment: Alignment.bottomLeft,
-            children: [
-              Container(
-                height: 650,
-                width: 380,
-                color: CustomColors.background
-              ),
-              // Imagen de fondo
-              Hero(
-                  tag: movie.img,
-                  child: SizedBox(
-                    height: 650,
-                    width: 380,
-                    child: Stack(children: [
-                      Positioned.fill(
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(30),
-                              child: Image.network(
-                                  'https://image.tmdb.org/t/p/w500${movie.img}',
-                                  fit: BoxFit.cover))),
-                      // Gradiente de transparente a negro
-                      Positioned.fill(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              begin: Alignment.center,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.transparent,
-                                Colors.black,
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(60),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 20,
+              spreadRadius: 0,
+            )
+          ]),
+      child: Column(children: [
+        Stack(
+          // clipBehavior: Clip.hardEdge,
+          alignment: Alignment.center,
+          children: [
+            Container(
+                height: 500,
+                width: 360,
+                decoration: BoxDecoration(
+                    color: CustomColors.background,
+                    borderRadius: BorderRadius.circular(60))),
+            // Imagen de fondo
+            GestureDetector(
+                onTap: () {
+                  final contextProvider =
+                      Provider.of<Context>(context, listen: false);
+                  contextProvider.setMovie(movie);
+                  const transitionDuration = Duration(milliseconds: 550);
+                  // GoRouter.of(context).push('/movie_details${movie.img}');
+
+                  Navigator.of(context).push(PageRouteBuilder(
+                      transitionDuration: transitionDuration,
+                      reverseTransitionDuration: transitionDuration,
+                      pageBuilder: (_, animation, __) {
+                        return FadeTransition(
+                            opacity: animation,
+                            child: MovieDetails(imgUrl: movie.img));
+                      }));
+                },
+                child: Hero(
+                    tag: movie.img,
+                    child: Container(
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(60),
                         ),
-                      ),
-                    ]),
-                  )),
-              if (firstCard)
-                Center(
-                    child: Transform.translate(
-                        offset: Offset(
-                            (400 - sizeLike * 3.6) <= 0
-                                ? 0
-                                : 400 - sizeLike * 3.6,
-                            -300),
-                        child: Transform.scale(
-                            scale: (0 + sizeLike / 100) >= 1
-                                ? 1
-                                : (0 + sizeLike / 100),
-                            child: Container(
-                                alignment: Alignment.center,
-                                height: 100,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(100)),
-                                child: const HeroIcon(HeroIcons.heart,
-                                    size: 80,
-                                    color: Colors.white,
-                                    style: HeroIconStyle.micro))))),
-              if (firstCard)
-                Center(
-                    child: Transform.translate(
-                        offset: Offset(
-                            (-400 + sizeUnLike * 3.6) >= 0
-                                ? 0
-                                : -400 + sizeUnLike * 3.6,
-                            -300),
-                        child: Transform.scale(
-                            scale: (0 + sizeUnLike / 100) >= 1
-                                ? 1
-                                : (0 + sizeUnLike / 100),
-                            child: Container(
-                                alignment: Alignment.center,
-                                height: 100,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(100)),
-                                child: const HeroIcon(HeroIcons.xMark,
-                                    size: 80,
-                                    color: Colors.white,
-                                    style: HeroIconStyle.micro))))),
-              // Textos de la pelicula
-              Padding(
-                  padding: const EdgeInsets.only(
-                      left: 15.0, right: 15.0, bottom: 20.0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                movie.title,
-                                style: const TextStyle(
+                        child: Image.network(
+                            'https://image.tmdb.org/t/p/w500/${movie.img}',
+                            height: 500,
+                            width: 360,
+                            fit: BoxFit.cover)))),
+            if (firstCard)
+              Center(
+                  child: Transform.translate(
+                      offset: Offset(
+                          (400 - sizeLike * 3.6) <= 0
+                              ? 0
+                              : 400 - sizeLike * 3.6,
+                          0),
+                      child: Transform.scale(
+                          scale: (0 + sizeLike / 100) >= 1
+                              ? 1
+                              : (0 + sizeLike / 100),
+                          child: Container(
+                              alignment: Alignment.center,
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(100)),
+                              child: const HeroIcon(HeroIcons.heart,
+                                  size: 80,
                                   color: Colors.white,
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            const SizedBox(width: 20.0),
-                            Text(
-                              movie.calification.toString().substring(0, 3),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(width: 5.0),
-                            const HeroIcon(HeroIcons.star,
-                                color: Colors.yellow,
-                                style: HeroIconStyle.solid,
-                                size: 21.0),
-                          ],
-                        ),
-                        const SizedBox(height: 5.0),
-                        Text(_recortarTexto(movie.overview, 150),
-                                style: const TextStyle(
-                                    color: Color.fromARGB(220, 255, 255, 255),
-                                    fontWeight: FontWeight.bold))
-                      ])),
-              // Evento de click de la pelicula
-              GestureDetector(
-                  onTap: () {
-                    final contextProvider = Provider.of<Context>(context, listen: false);
-                    contextProvider.setMovie(movie);
-                    GoRouter.of(context).push('/movie_details${movie.img}');
-                  },
-                  child: Container(
-                    width: 380,
-                    height: 650,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                  ))
-            ],
-          ),
-        ],
+                                  style: HeroIconStyle.micro))))),
+            if (firstCard)
+              Center(
+                  child: Transform.translate(
+                      offset: Offset(
+                          (-400 + sizeUnLike * 3.6) >= 0
+                              ? 0
+                              : -400 + sizeUnLike * 3.6,
+                          0),
+                      child: Transform.scale(
+                          scale: (0 + sizeUnLike / 100) >= 1
+                              ? 1
+                              : (0 + sizeUnLike / 100),
+                          child: Container(
+                              alignment: Alignment.center,
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(100)),
+                              child: const HeroIcon(HeroIcons.xMark,
+                                  size: 80,
+                                  color: Colors.white,
+                                  style: HeroIconStyle.micro))))),
+          ],
+        ),
+        const SizedBox(height: 15),
+        Hero(
+            tag: '${movie.img}title',
+            child: Text(movie.title,
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black.withOpacity(0.7)
+                ),
+                softWrap: false,
+                overflow: TextOverflow.visible
+            )),
+        const SizedBox(height: 3),
+                Text('${movie.genres[0]['name']} & ${movie.genres[1]['name']}',
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.5),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ))
+      ]),
     );
   }
 }

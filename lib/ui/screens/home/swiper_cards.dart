@@ -1,12 +1,10 @@
-import 'dart:math';
 
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:book_flix/classes/movie.dart';
 import 'package:book_flix/ui/screens/home/buttons.dart';
+import 'package:book_flix/ui/screens/home/requests/get_movies.dart';
 import 'package:book_flix/ui/skeletons/movie_card_skeleton.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import './movie_card.dart';
 
 class Swiper extends StatefulWidget {
@@ -18,35 +16,24 @@ class Swiper extends StatefulWidget {
 
 class _Swiper extends State<Swiper> with SingleTickerProviderStateMixin {
   final AppinioSwiperController swiperController = AppinioSwiperController();
-  List<dynamic> _movies = [];
+  List<Movie> _movies = [];
 
   double _sizeLike = 0.0;
   double _sizeUnLike = 0.0;
 
   int indexFirst = 0; // Señala el index de la tarjeta que esta visible
 
-  // Peticion de peliculas
-  Future<dynamic> _fetchMovies() async {
-    final dio = Dio();
-    dio.options.headers['Authorization'] =
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZDQ2NmE3ZmQ5YzgzYWZlODZjNDE3MDU4Njg4MWM2ZCIsIm5iZiI6MTcyNDQyNTk5MC41NzMyMzIsInN1YiI6IjY2YzhhNGRjYjg2N2EwYWVkZGZiODI0NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Z3FnmqNKctwwqe5l4vYagTrxAU2LY7vu_lxTqKGgDf0';
-
-    try {
-      final response = await dio.get(
-          'https://api.themoviedb.org/3/discover/movie?language=en-US&page=1&sort_by=popularity.desc');
-      setState(() {
-        _movies = response.data['results'];
-      });
-    } catch (e) {
-      print('Error --> to get movies ${e.toString()}');
-    }
-  }
-
   @override
   void initState() {
-    // Inicia el estado del widget y hace la peiticion de peliculas
     super.initState();
-    _fetchMovies();
+    setMovies();
+  }
+
+  Future<void> setMovies() async {
+    final movies = await getMovies();
+    setState(() {
+      _movies = movies;
+    });
   }
 
   // Callback que se llama cuando se termina un swipe
@@ -82,8 +69,8 @@ class _Swiper extends State<Swiper> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Column(children: [
       SizedBox(
-          height: 650,
-          width: 380,
+          height: 600,
+          width: 360,
           child: Stack(children: [
             if (_movies.isNotEmpty)
               AppinioSwiper(
@@ -100,12 +87,7 @@ class _Swiper extends State<Swiper> with SingleTickerProviderStateMixin {
                     final movie = _movies[index];
 
                     return MovieCard(
-                      movie: Movie(
-                        calification: movie['vote_average'],
-                        title: movie['title'],
-                        overview: movie['overview'],
-                        img: movie['poster_path'],
-                      ),
+                      movie: movie,
                       firstCard: indexFirst == index,
                       sizeLike: _sizeLike,
                       sizeUnLike: _sizeUnLike,
