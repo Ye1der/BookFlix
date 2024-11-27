@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "393316629745",
+    "project_id": "bookflix-c892d",
+    "storage_bucket": "bookflix-c892d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393316629745:android:86f717fbdb34b64f32bd50",
+        "android_client_info": {
+          "package_name": "com.example.book_flix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393316629745-4d03pegsdgaplnq8ool444nll53ue3eq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.book_flix",
+            "certificate_hash": "32c6f14d0ccbd48f8229928c751e16e477a237a4"
+          }
+        },
+        {
+          "client_id": "393316629745-94i1cnvlsa8ruq4343dlerge3hoi9vsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvl4kXkogm0VCst21gwu9Oez9LsQhfoVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393316629745-94i1cnvlsa8ruq4343dlerge3hoi9vsk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -31,8 +31,10 @@ class Home extends StatelessWidget {
                   onTap: () {
                     GoRouter.of(context).push('/favorites');
                   },
-                  child: const Icon(Icons.favorite,
-                      size: 30.0, color: CustomColors.red)),
+                  child: Transform.translate(
+                    offset: const Offset(-10, 0),
+                    child: const HeroIcon(HeroIcons.heart, style: HeroIconStyle.micro, color: CustomColors.red, size: 35))
+                  ),
             ]
         ),
         body: Center(

@@ -1,6 +1,6 @@
-
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:book_flix/classes/movie.dart';
+import 'package:book_flix/database/favorite_movies_dao.dart';
 import 'package:book_flix/ui/screens/home/buttons.dart';
 import 'package:book_flix/ui/screens/home/requests/get_movies.dart';
 import 'package:book_flix/ui/skeletons/movie_card_skeleton.dart';
@@ -17,6 +17,7 @@ class Swiper extends StatefulWidget {
 class _Swiper extends State<Swiper> with SingleTickerProviderStateMixin {
   final AppinioSwiperController swiperController = AppinioSwiperController();
   List<Movie> _movies = [];
+  final _moviesDao = FavoriteMoviesDao();
 
   double _sizeLike = 0.0;
   double _sizeUnLike = 0.0;
@@ -47,7 +48,8 @@ class _Swiper extends State<Swiper> with SingleTickerProviderStateMixin {
       return; // si no se completa el swipe no se termina de ejecutar la función
 
     if (swiperActivity.direction.name == 'right') {
-      print('derecha');
+      // TODO: guardar esa movie en la db
+      _moviesDao.insert(_movies[indexFirst]);
     }
 
     setState(() {

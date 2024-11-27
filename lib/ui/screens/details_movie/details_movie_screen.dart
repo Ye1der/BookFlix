@@ -9,8 +9,9 @@ import 'package:provider/provider.dart';
 
 class MovieDetails extends StatefulWidget {
   final String imgUrl;
+  final String imageHeroTag;
 
-  const MovieDetails({required this.imgUrl, super.key});
+  const MovieDetails({required this.imageHeroTag ,required this.imgUrl, super.key});
 
   @override
   _MovieDetails createState() => _MovieDetails();
@@ -33,11 +34,11 @@ class _MovieDetails extends State<MovieDetails> {
                     left: 20,
                   ),
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 490,
-                    child: SingleChildScrollView(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                      height: MediaQuery.of(context).size.height - 490,
+                      child: SingleChildScrollView(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
                             const SizedBox(height: 70),
                             Text(movie.title,
                                 style: TextStyle(
@@ -69,7 +70,8 @@ class _MovieDetails extends State<MovieDetails> {
                                       decoration: BoxDecoration(
                                           border: Border(
                                         right: BorderSide(
-                                            color: Colors.black.withOpacity(0.8),
+                                            color:
+                                                Colors.black.withOpacity(0.8),
                                             width: 2),
                                       ))),
                                   const SizedBox(width: 15),
@@ -86,7 +88,8 @@ class _MovieDetails extends State<MovieDetails> {
                                       decoration: BoxDecoration(
                                           border: Border(
                                         right: BorderSide(
-                                            color: Colors.black.withOpacity(0.8),
+                                            color:
+                                                Colors.black.withOpacity(0.8),
                                             width: 2),
                                       ))),
                                   const SizedBox(width: 15),
@@ -100,35 +103,36 @@ class _MovieDetails extends State<MovieDetails> {
                             SizedBox(
                                 width: MediaQuery.of(context).size.width - 40,
                                 child: Text(movie.overview,
-                                    style: TextStyle(
-                                        color: Colors.black.withOpacity(0.7),
+                                    style: const TextStyle(
+                                        color: Colors.black,
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500))),
                             const SizedBox(height: 20),
                             Row(
                                 children: [
-                                  const Text('Genres: ', style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 16
-                                  ))
-                                ] + movie.genres.map((genre) {
-                              final bool showAmpersand =
-                                  movie.genres.last['name'] != genre['name'];
-                              return Text('${genre['name']} ${showAmpersand ? '&' : ''} ', style: TextStyle(
-                                color: Colors.black.withOpacity(0.6),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16
-                              ));
-                            }).toList()
-                            )
-                          ])))
-                    )
-                  ),
+                                      const Text('Genres: ',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w900,
+                                              fontSize: 16))
+                                    ] +
+                                    movie.genres.map((genre) {
+                                      final bool showAmpersand =
+                                          movie.genres.last['name'] !=
+                                              genre['name'];
+                                      return Text(
+                                          '${genre['name']} ${showAmpersand ? '&' : ''} ',
+                                          style: TextStyle(
+                                              color:
+                                                  Colors.black.withOpacity(0.6),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16));
+                                    }).toList())
+                          ]))))),
           Positioned(
             top: -100,
             child: Hero(
-                tag: widget.imgUrl,
+                tag: widget.imageHeroTag,
                 child: ClipRRect(
                     clipBehavior: Clip.hardEdge,
                     borderRadius: BorderRadius.circular(60),

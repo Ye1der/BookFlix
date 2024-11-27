@@ -1,11 +1,15 @@
 import 'package:book_flix/Context.dart';
+import 'package:book_flix/database/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import './router.dart';
 import 'package:book_flix/utils/colors/global_colors.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseHelper.instance.init();
+
   // Cambia el color de la barra de navegacion
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     systemNavigationBarColor: CustomColors.background,
@@ -13,10 +17,7 @@ void main() {
   ));
 
   // Punto de entrada de la app
-  runApp(ChangeNotifierProvider(
-    create: (_) => Context(),
-    child: const Root()
-  ));
+  runApp(ChangeNotifierProvider(create: (_) => Context(), child: const Root()));
 }
 
 class Root extends StatefulWidget {
@@ -30,7 +31,6 @@ class _Root extends State<Root> with RouterMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: router);
+        debugShowCheckedModeBanner: false, routerConfig: router);
   }
 }

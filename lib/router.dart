@@ -58,7 +58,7 @@ mixin RouterMixin on State<Root> {
             transitionDuration: const Duration(milliseconds: 500),
             reverseTransitionDuration: const Duration(milliseconds: 500),
             key: state.pageKey,
-            child: MovieDetails(imgUrl: imgUrl),
+            child: MovieDetails(imgUrl: imgUrl, imageHeroTag: imgUrl),
             transitionsBuilder: (context, animation, _, child) {
               return FadeTransition(
                   opacity: Tween(begin: 0.0, end: 1.0).animate(animation),

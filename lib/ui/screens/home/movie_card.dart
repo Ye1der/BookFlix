@@ -65,7 +65,7 @@ class MovieCard extends StatelessWidget {
                       pageBuilder: (_, animation, __) {
                         return FadeTransition(
                             opacity: animation,
-                            child: MovieDetails(imgUrl: movie.img));
+                            child: MovieDetails(imgUrl: movie.img, imageHeroTag: movie.img));
                       }));
                 },
                 child: Hero(
@@ -129,9 +129,7 @@ class MovieCard extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 15),
-        Hero(
-            tag: '${movie.img}title',
-            child: Text(movie.title,
+        Text(movie.title,
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
@@ -139,7 +137,7 @@ class MovieCard extends StatelessWidget {
                 ),
                 softWrap: false,
                 overflow: TextOverflow.visible
-            )),
+            ),
         const SizedBox(height: 3),
                 Text('${movie.genres[0]['name']} & ${movie.genres[1]['name']}',
                     style: TextStyle(

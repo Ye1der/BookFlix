@@ -20,6 +20,12 @@ class _MovieCardSkeleton extends State<MovieCardSkeleton>
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
         alignment: Alignment.bottomLeft,
