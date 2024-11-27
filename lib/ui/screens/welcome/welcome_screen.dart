@@ -29,17 +29,17 @@ class Welcome extends StatelessWidget {
           const SizedBox(height: 40.0),
           const Buttons(),
           const SizedBox(height: 15.0),
-          RichText(
-              text: const TextSpan(children: [
-            TextSpan(
-                text: 'Do you already have an acount?',
-                style: TextStyle(
-                    color: CustomColors.gray, fontWeight: FontWeight.bold)),
-            TextSpan(
-                text: ' Login',
-                style: TextStyle(
-                    color: CustomColors.red, fontWeight: FontWeight.bold)),
-          ])),
+          // RichText(
+          //     text: const TextSpan(children: [
+          //   TextSpan(
+          //       text: 'Do you already have an acount?',
+          //       style: TextStyle(
+          //           color: CustomColors.gray, fontWeight: FontWeight.bold)),
+          //   TextSpan(
+          //       text: ' Login',
+          //       style: TextStyle(
+          //           color: CustomColors.red, fontWeight: FontWeight.bold)),
+          // ])),
           const SizedBox(height: 20.0)
         ])));
   }
