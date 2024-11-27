@@ -1,3 +1,17 @@
+buildscript {
+    repositories {
+        google()  // Repositorio de Google
+        mavenCentral()  // Repositorio Maven Central
+    }
+    dependencies {
+        // Dependencia para el plugin de Android
+        classpath 'com.android.tools.build:gradle:7.3.0'
+
+        // Dependencia para el plugin de Google Services
+        classpath 'com.google.gms:google-services:4.4.2'  // Versión del plugin de Google Services
+    }
+}
+
 plugins {
   id 'com.google.gms.google-services' version '4.4.2' apply false
 }

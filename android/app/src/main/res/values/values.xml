@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Firebase Web Client ID -->
+    <string name="default_web_client_id" translatable="false">393316629745-4d03pegsdgaplnq8ool444nll53ue3eq.apps.googleusercontent.com</string>
+
+    <!-- Firebase API Key -->
+    <string name="firebase_api_key" translatable="false">AIzaSyAvl4kXkogm0VCst21gwu9Oez9LsQhfoVU</string>
+
+    <!-- Opcionalmente, puedes agregar el Client ID para otros servicios, si lo necesitas -->
+    <string name="google_oauth_client_id" translatable="false">393316629745-94i1cnvlsa8ruq4343dlerge3hoi9vsk.apps.googleusercontent.com</string>
+</resources>

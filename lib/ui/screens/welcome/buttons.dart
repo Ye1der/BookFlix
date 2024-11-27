@@ -19,13 +19,13 @@ class Buttons extends StatelessWidget {
           text: 'Get started with Google',
           icon: SvgPicture.asset('assets/img/google.svg', height: 25, width: 25),
           onTap: () async {
-            User? user = await signInWithGoogle();
-            if (user != null) {
-              print("Inicio de sesión exitoso: ${user.displayName}");
+            // User? user = await signInWithGoogle();
+            // if (user != null) {
+            //   print("Inicio de sesión exitoso: ${user.displayName}");
               GoRouter.of(context).push('/home');
-            } else {
-              print("El usuario canceló el inicio de sesión.");
-            }
+            // } else {
+            //   print("El usuario canceló el inicio de sesión.");
+            // }
           }),
       // const SizedBox(width: 15.0),
       // CustomIconButton(
